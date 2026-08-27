@@ -44,7 +44,10 @@ Route changes trigger an animated page transition defined in `app/layout.jsx`:
 Child elements that want stagger-in animation can use `childVariants` from `lib/variants.js` as Framer Motion variants.
 
 ### Hire Me Modal
-`components/HireMeModal.jsx` is a Radix `Dialog` (not a route) rendered inside `Header.jsx`'s desktop nav as the "Hire Me" trigger button. It contains a service-inquiry form (name, email, phone, service selector via `CustomSelect`, message) styled to match the site's dark theme; the form has no submit handler wired up yet (`onSubmit` just calls `preventDefault`).
+`components/HireMeModal.jsx` is a Radix `Dialog` (not a route) rendered inside `Header.jsx`'s desktop nav as the "Hire Me" trigger button. It contains a service-inquiry form (name, email, phone, service selector via `CustomSelect`, message) styled to match the site's dark theme. Its `service` options and copy are a separate, independently maintained set of constants from the ones in `/contact` — keep both in sync manually when adding/renaming services.
+
+### Contact Form Submission
+Both `/contact` (`app/contact/page.jsx`) and the Hire Me Modal manage their own `formData`/`status` (`idle | sending | success | error`) state and independently `fetch("/api/contact", { method: "POST" })` with the same JSON shape (`firstName`, `lastName`, `email`, `phone`, `service`, `message`), rendering inline success/error text based on the response. There is no shared form hook — the submit logic is duplicated between the two components.
 
 ### Custom Select
 Both the Hire Me Modal and the `/contact` page use `components/ui/CustomSelect.jsx` for the service dropdown — a hand-rolled replacement for the Radix `Select` primitive (removed from the codebase; `@radix-ui/react-select` is no longer a dependency). Use `CustomSelect`, not Radix, for any new dropdown UI.
