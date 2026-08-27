@@ -29,9 +29,10 @@ Create a `.env.local` file at the root with:
 - `/services` — Grid of offered services with hover animations; service data defined inline as a `services` array
 - `/resume` — Tabbed view of experience, education, skills, and about info (data defined inline as constants at the top of the file)
 - `/work` — Swiper-based project slider (project data defined inline as a `projects` array)
-- `/contact` — Contact form (name, email, phone, service selector, message) alongside a contact info list
+- `/contact` — Contact form (name, email, phone, service selector, message) alongside a contact info list; submits to `/api/contact`
 - `/blog` — Grid of blog post previews (post data defined inline as a `posts` array); posts are not yet linked to individual detail pages
 - `/api/github-stats` — Server-side API route that fetches live GitHub GraphQL data; cached 1 hour via `next: { revalidate: 3600 }`
+- `/api/contact` — POST endpoint that sends contact form submissions as email via `nodemailer` (Gmail transport); validates required fields and returns JSON `{ error }` / `{ success }`
 
 ### Page Transition System
 Route changes trigger an animated page transition defined in `app/layout.jsx`:
